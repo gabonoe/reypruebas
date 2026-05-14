@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NL87TSMJML"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NL87TSMJML');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0a1a2f" />
+  <!-- Open Graph for social sharing -->
+  <meta property="og:title" content="El Rey futbolero">
+  <meta property="og:description" content="¡Conoce al Rey, juega al fútbol y experimenta realidad aumentada!">
+  <meta property="og:image" content="assets/im/splashb.jpg">
+  <meta property="og:type" content="website">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="El Rey futbolero">
+  <meta name="twitter:description" content="¡Conoce al Rey, juega al fútbol y experimenta realidad aumentada!">
+  <meta name="twitter:image" content="assets/im/splashb.jpg">
+  <title>El Rey futbolero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Ultra&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="icon" href="game/assets/im/soccer.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- SPLASH SCREEN -->
+  <section id="splash" class="screen active">
+    <div class="splash-bg"></div>
+    <div class="splash-particles" aria-hidden="true">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+      <img src="assets/im/star.svg" class="star" alt=""><img src="assets/im/star.svg" class="star" alt="">
+    </div>
+    <div class="splash-content">
+      <button id="btn-comenzar" class="btn-comenzar">COMENZAR</button>
+    </div>
+  </section>
+
+  <!-- INSTRUCCIONES -->
+  <section id="opciones" class="screen">
+    <div class="instruccion-bg"></div>
+    <div class="opciones-content">
+      <div class="menu-buttons">
+        <button class="menu-btn" data-target="rey360">
+          <span class="menu-btn-text">¡CÓNOCE AL REY!</span>
+        </button>
+        <button class="menu-btn" onclick="window.location.href='game/game.html'">
+          <span class="menu-btn-text">Juego ¡Gánale al Rey!</span>
+        </button>
+        <button class="menu-btn" onclick="window.location.href='ar/ar.html'">
+          <span class="menu-btn-text">¡Conviértete en el REY!</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REY 360 -->
+  <section id="rey360" class="screen">
+    <button class="btn-back" data-target="opciones" aria-label="Volver">
+      <img src="assets/im/homeb.svg" alt="Home">
+    </button>
+    <button class="btn-music" id="btn-music" aria-label="Pausar música">
+      <img src="game/assets/im/nota.svg" alt="Música">
+    </button>
+    <a href="game/game.html" class="btn-play" aria-label="Jugar">
+      <img src="assets/im/soccer.svg" class="soccer-icon" alt="">
+      <span>JUGAR</span>
+    </a>
+    <h2 class="screen-title">&ldquo;PATRÓN<br>DEL ARCO&rdquo;</h2>
+
+    <!-- HUD corners -->
+    <div class="hud-corner hud-tl"></div>
+    <div class="hud-corner hud-tr"></div>
+    <div class="hud-corner hud-bl"></div>
+    <div class="hud-corner hud-br"></div>
+    <div class="hud-grid"></div>
+
+    <!-- Particles -->
+    <div class="particles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="model-container">
+      <canvas id="rey-canvas"></canvas>
+
+      <!-- Hotspots (DOM overlay, anclados por JS a positions 3D del modelo) -->
+      <div class="hotspots" id="hotspots">
+        <div class="Hotspot side-right" data-x=".1"     data-y="1.7" data-z="0.1">
+          <span class="hot-dot"></span><span class="hot-label">Instinto de<br>Cazador de penales<span class="hot-close">×</span></span>
+        </div>
+        <div class="Hotspot side-right" data-x="0.15"  data-y="1.47" data-z="0.18">
+          <span class="hot-dot"></span><span class="hot-label">Reflejos de<br>Halcón en picada<span class="hot-close">×</span></span>
+        </div>
+        <div class="Hotspot side-right" data-x="0.38"  data-y=".8"  data-z="0.18">
+          <span class="hot-dot"></span><span class="hot-label">Manos de<br>Instinto felino<span class="hot-close">×</span></span>
+        </div>
+        <div class="Hotspot side-right" data-x="0.22"  data-y="0.42" data-z="0.12">
+          <span class="hot-dot"></span><span class="hot-label">Chamorros<br>de Campeón<span class="hot-close">×</span></span>
+        </div>
+        <div class="Hotspot side-right" data-x="0.2"  data-y="0.14" data-z="0.15">
+          <span class="hot-dot"></span><span class="hot-label">Botas<br>rompe-delanteros<span class="hot-close">×</span></span>
+        </div>
+        <div class="Hotspot side-left"  data-x="-0.25" data-y="0.55" data-z="0.15">
+          <span class="hot-dot"></span><span class="hot-label">Rodillas con<br>garantía extendida<span class="hot-close">×</span></span>
+        </div>
+        <div class="Hotspot side-left"  data-x="-0.4" data-y="1.3"  data-z="0.18">
+          <span class="hot-dot"></span><span class="hot-label">Sangre fría de<br>Final de Campeonato<span class="hot-close">×</span></span>
+        </div>
+        <div class="Hotspot side-left"  data-x="-0.2"  data-y="1.47" data-z="0.1">
+          <span class="hot-dot"></span><span class="hot-label">Colmillo de<br>penal decisivo<span class="hot-close">×</span></span>
+        </div>
+      </div>
+
+      <!-- Loader -->
+      <div class="loader" id="rey-loader"><div class="loader-inner"></div><p>Cargando modelo...</p></div>
+
+      <!-- Indicador de auto-rotación -->
+      <div class="autorotate-hint" id="autorotate-hint" aria-hidden="true">
+        <span>Girando...</span>
+      </div>
+    </div>
+    <p class="hint">Click a hotspots</p>
+  </section>
+
+  <script src="app.js"></script>
+  <script type="module" src="rey360.js"></script>
+</body>
+</html>

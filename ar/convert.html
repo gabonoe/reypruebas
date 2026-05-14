@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Convertir rey.glb -> rey.usdz</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #111;
+      color: #fff;
+      max-width: 640px;
+      margin: 40px auto;
+      padding: 24px;
+      line-height: 1.5;
+    }
+    h1 { margin-top: 0; }
+    button {
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      background: #e63946;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.5; cursor: wait; }
+    #log {
+      margin-top: 20px;
+      padding: 14px;
+      background: #000;
+      border: 1px solid #333;
+      border-radius: 8px;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      min-height: 80px;
+    }
+    code { background: #222; padding: 2px 6px; border-radius: 4px; }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <h1>Convertir rey.glb a rey.usdz</h1>
+  <p>Esta pagina convierte el modelo a formato USDZ para AR Quick Look (iOS).</p>
+  <ol>
+    <li>Pulsa <b>Convertir</b>.</li>
+    <li>Se descargara <code>rey.usdz</code>.</li>
+    <li>Mueve el archivo a <code>assets/3D/rey.usdz</code>.</li>
+  </ol>
+  <button id="btn">Convertir</button>
+  <div id="log">Listo.</div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+    import { USDZExporter } from 'three/addons/exporters/USDZExporter.js';
+
+    const btn = document.getElementById('btn');
+    const log = document.getElementById('log');
+    const print = (m) => { log.textContent += '\n' + m; console.log(m); };
+
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      log.textContent = 'Cargando rey.glb...';
+      try {
+        const draco = new DRACOLoader();
+        draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+        draco.setDecoderConfig({ type: 'js' });
+
+        const loader = new GLTFLoader();
+        loader.setDRACOLoader(draco);
+
+        const gltf = await loader.loadAsync('assets/3D/rey.glb');
+        print('GLB cargado.');
+
+        // USDZExporter requiere materiales MeshStandardMaterial / MeshPhysicalMaterial.
+        // Comprobamos y mostramos info.
+        let meshCount = 0;
+        gltf.scene.traverse((o) => { if (o.isMesh) meshCount++; });
+        print('Meshes: ' + meshCount);
+
+        print('Exportando a USDZ (puede tardar varios segundos)...');
+        const exporter = new USDZExporter();
+        const arraybuffer = await exporter.parse(gltf.scene);
+
+        const blob = new Blob([arraybuffer], { type: 'model/vnd.usdz+zip' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'rey.usdz';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+
+        print('Descarga lista. Mueve rey.usdz a assets/3D/');
+        draco.dispose();
+      } catch (err) {
+        console.error(err);
+        print('ERROR: ' + (err?.message || err));
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NL87TSMJML"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NL87TSMJML');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Realidad Aumentada con el Rey</title>
+  <link rel="icon" href="../game/assets/im/camera.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+  <!-- three.js via importmap (no build step) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <!-- 8th Wall Engine Binary (open source, sin app key, Android + iOS Safari) -->
+  <script src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js" async crossorigin="anonymous" data-preload-chunks="slam"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@8thwall/xrextras@1/dist/xrextras.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@8thwall/landing-page@1/dist/landing-page.js" crossorigin="anonymous"></script>
+
+  <!-- MediaPipe Tasks Vision se importa como modulo ES dentro de ar.js -->
+</head>
+<body>
+  <!-- Splash -->
+  <section id="splash" class="screen">
+    <img id="splash-img" src="assets/im/splash.png" alt="Splash" />
+    <a href="../index.html#opciones" id="btn-home-splash" aria-label="Inicio"><img src="assets/im/homeb.svg" alt="Inicio" /></a>
+    <button id="btn-start">Comenzar</button>
+  </section>
+
+  <!-- No-mobile -->
+  <section id="no-mobile" class="screen hidden">
+    <p>Esta función solo está disponible en dispositivos móviles</p>
+    <a href="../index.html#opciones" class="btn-menu-principal">Ir a menu principal</a>
+  </section>
+
+  <!-- AR overlay -->
+  <section id="ar-overlay" class="hidden">
+    <button id="btn-home" aria-label="Inicio"><img src="assets/im/homeb.svg" alt="Inicio" /></button>
+    <button id="btn-audio" aria-label="Audio"><img id="icon-audio" src="../game/assets/im/nota.svg" alt="Audio"></button>
+    <div id="hint">Selfie del REY — apunta tu cara a la cámara</div>
+    <button id="btn-switch" aria-label="Cambiar modo">
+      <img src="assets/im/world.svg" alt="AR" />
+      <img src="assets/im/self.svg" alt="Selfie" />
+      <span>MODO</span>
+    </button>
+    <button id="btn-photo" aria-label="Tomar foto"></button>
+    <!-- Logo overlay: visible in selfie mode, composited into screenshot -->
+    <img id="selfie-logo" src="assets/im/logo.png" alt="Logo" class="hidden" />
+  </section>
+
+  <!-- Photo preview (after capture) -->
+  <section id="photo-preview" class="screen hidden">
+    <img id="photo-img" alt="Foto" />
+    <div class="photo-actions">
+      <button id="btn-share">Compartir</button>
+      <button id="photo-close">Cerrar</button>
+    </div>
+  </section>
+
+
+  <!-- Camera feed canvas (usado por 8th Wall) -->
+  <canvas id="camerafeed" class="hidden"></canvas>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
